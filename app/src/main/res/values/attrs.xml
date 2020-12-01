@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="PlayingCardView">
+        <attr name="suite" format="enum">
+            <enum name="diamond" value="0"/>
+            <enum name="hearts" value="1"/>
+            <enum name="clubs" value="2"/>
+            <enum name="spades" value="3"/>
+        </attr>
+        <attr name="value" format="integer"/>
+    </declare-styleable>
+</resources>
