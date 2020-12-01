@@ -47,18 +47,12 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
-//    implementation "org.koin:koin-core:2.2.1"
-//    implementation "org.koin:koin-core-ext:2.2.1"
-//
     implementation "org.koin:koin-android:2.2.1"
-//    implementation "org.koin:koin-androidx-scope:2.2.1"
     implementation "org.koin:koin-androidx-viewmodel:2.2.1"
-//    implementation "org.koin:koin-androidx-fragment:2.2.1"
-//
+
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-runtime-ktx:2.2.0"
     implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.2.0"
-//
-//    implementation "org.koin:koin-android:2.2.1"
-//    implementation "org.koin:koin-android-viewmodel:2.2.1"
+
+    implementation "com.squareup.retrofit2:retrofit:2.9.0"
 }

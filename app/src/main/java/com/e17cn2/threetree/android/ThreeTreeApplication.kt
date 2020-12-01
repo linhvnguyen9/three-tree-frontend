@@ -19,14 +19,15 @@ class ThreeTreeApplication : Application() {
     }
 
     private fun initKoin() {
+        val modules =
+            listOf(
+                presentationModule,
+                dataModule
+            )
+
         startKoin {
             androidContext(this@ThreeTreeApplication)
-            val modules = modules(
-                listOf(
-                    presentationModule,
-                    dataModule
-                )
-            )
+            modules(modules)
         }
     }
 

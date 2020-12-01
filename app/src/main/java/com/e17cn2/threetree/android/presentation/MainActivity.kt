@@ -1,14 +1,11 @@
 package com.e17cn2.threetree.android.presentation
 
-import android.content.Context
-import android.net.wifi.WifiManager
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.getSystemService
+import androidx.databinding.DataBindingUtil
+import com.e17cn2.threetree.android.R
 import com.e17cn2.threetree.android.databinding.ActivityMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import timber.log.Timber
-import java.net.InetAddress
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -16,7 +13,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
         binding.lifecycleOwner = this
         binding.viewModel = viewModel

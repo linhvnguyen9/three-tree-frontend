@@ -10,11 +10,7 @@ import kotlinx.coroutines.withContext
 
 class ConnectionRepositoryImpl(private val connectionDao: ConnectionDao) : ConnectionRepository {
     @MainThread
-    override suspend fun getClientLocalIp() : LiveData<String> {
-        val liveData = MutableLiveData<String>()
-        withContext(Dispatchers.IO) {
-            liveData.postValue(connectionDao.getClientIpAddress())
-        }
-        return liveData
+    override suspend fun getClientLocalIp() : String {
+        return connectionDao.getClientIpAddress()
     }
 }

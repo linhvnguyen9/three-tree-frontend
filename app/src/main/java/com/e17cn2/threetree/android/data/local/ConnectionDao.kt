@@ -3,23 +3,18 @@ package com.e17cn2.threetree.android.data.local
 import android.content.Context
 import android.net.wifi.WifiManager
 import androidx.core.content.getSystemService
+import java.net.Inet4Address
 import java.net.InetAddress
+import java.net.NetworkInterface
 
 class ConnectionDao() {
+
     fun getClientIpAddress() : String {
-//        return context.getSystemService<WifiManager>().let {
-//            when {
-//                it == null -> "No wifi available"
-//                !it.isWifiEnabled -> "Wifi is disabled"
-//                it.connectionInfo == null -> "Wifi not connected"
-//                else -> {
-//                    val ip = it.connectionInfo.ipAddress
-//                    val i = InetAddress.getByName(java.lang.String.valueOf(ip))
-//                    val ipString: String = i.hostAddress
-//                    ipString
-//                }
-//            }
-//        }
+        NetworkInterface.getNetworkInterfaces()?.toList()?.map { networkInterface ->
+            networkInterface.inetAddresses?.toList()?.find {
+                !it.isLoopbackAddress && it is Inet4Address
+            }?.let { return it.hostAddress }
+        }
         return ""
     }
 }

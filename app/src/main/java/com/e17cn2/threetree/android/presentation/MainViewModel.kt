@@ -1,12 +1,12 @@
 package com.e17cn2.threetree.android.presentation
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.liveData
+import androidx.lifecycle.*
 import com.e17cn2.threetree.android.domain.usecase.GetClientIpAddressUseCase
+import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class MainViewModel(private val getClientIpAddressUseCase: GetClientIpAddressUseCase) : ViewModel() {
-    val clientIp: LiveData<String> = liveData {
-        emitSource(getClientIpAddressUseCase())
+    val clientIp = liveData {
+        emit(getClientIpAddressUseCase())
     }
 }
