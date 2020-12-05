@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.e17cn2.threetree.android.R
 import com.e17cn2.threetree.android.databinding.FragmentMainBinding
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,6 +25,9 @@ class MainFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        binding.recyclerMainRooms.adapter = RoomsListAdapter()
+        binding.recyclerMainRooms.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         return binding.root
     }
