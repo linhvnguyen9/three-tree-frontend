@@ -54,18 +54,6 @@
                 app:suite="clubs"
                 app:value="1" />
 
-            <Button
-                android:layout_gravity="center_horizontal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Logout" />
-
-            <Button
-                android:id="@+id/button_main_join_room"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="TEST - Join room"/>
-
         </LinearLayout>
 
     </androidx.core.widget.NestedScrollView>

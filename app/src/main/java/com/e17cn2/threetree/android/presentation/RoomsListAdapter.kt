@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.e17cn2.threetree.android.databinding.ItemRoomBinding
 import com.e17cn2.threetree.entity.Room
 
-class RoomsListAdapter : ListAdapter<Room, RoomsListAdapter.RoomViewHolder>(RoomListDiffUtil()) {
+class RoomsListAdapter(private val onItemClickCallback : (room: Room) -> Unit) : ListAdapter<Room, RoomsListAdapter.RoomViewHolder>(RoomListDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder =
         RoomViewHolder.from(parent)
 
@@ -16,6 +16,9 @@ class RoomsListAdapter : ListAdapter<Room, RoomsListAdapter.RoomViewHolder>(Room
         val item = getItem(position)
         if (item != null) {
             holder.bind(item)
+            holder.itemView.setOnClickListener {
+                onItemClickCallback(item)
+            }
         }
     }
 

@@ -17,5 +17,9 @@
         android:id="@+id/roomFragment"
         android:name="com.e17cn2.threetree.android.presentation.room.RoomFragment"
         android:label="fragment_room"
-        tools:layout="@layout/fragment_room" />
+        tools:layout="@layout/fragment_room" >
+        <argument
+            android:name="room"
+            app:argType="com.e17cn2.threetree.entity.Room" />
+    </fragment>
 </navigation>

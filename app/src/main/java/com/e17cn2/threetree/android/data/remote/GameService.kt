@@ -13,11 +13,10 @@ class GameService(private val connectionDao: ConnectionDao) {
     private lateinit var ois: ObjectInputStream
     private lateinit var oos: ObjectOutputStream
 
-    private val roomId = 8090 //TODO: Remove hardcode
     private val clientIp = connectionDao.getClientIpAddress()
 
-    fun joinRoom(): Connection {
-        socket = Socket("10.170.77.6", roomId)
+    fun joinRoom(roomId: Int): Connection {
+        socket = Socket("10.170.77.8", roomId)
 
         oos = ObjectOutputStream(socket.getOutputStream())
         ois = ObjectInputStream(socket.getInputStream())
@@ -26,7 +25,7 @@ class GameService(private val connectionDao: ConnectionDao) {
             Connection(
                 clientIp,
                 roomId,
-                "23",
+                "5fc66d052fc9055ddc0d3485",
                 "JOIN"
             )
         )
@@ -36,12 +35,7 @@ class GameService(private val connectionDao: ConnectionDao) {
         return response
     }
 
-    fun voteStart() {
-//        socket = Socket("10.170.77.6", roomId)
-//
-//        oos = ObjectOutputStream(socket.getOutputStream())
-//        ois = ObjectInputStream(socket.getInputStream())
-
+    fun voteStart(roomId: Int) {
         println("Voting to start")
         val voteStart =  Connection(
             clientIp,
@@ -54,10 +48,12 @@ class GameService(private val connectionDao: ConnectionDao) {
         println("Vote start done")
     }
 
-    fun getCards() {
+    fun getRoundResult(): Round {
         println("Wait for card result")
         val roundResult = ois.readObject() as Round
-            println(roundResult)
+        println(roundResult)
+        Timber.d("round result $roundResult")
+        return roundResult
     }
 
     fun closeConnection() {

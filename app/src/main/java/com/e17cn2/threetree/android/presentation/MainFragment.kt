@@ -11,6 +11,7 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.e17cn2.threetree.android.R
 import com.e17cn2.threetree.android.databinding.FragmentMainBinding
+import com.e17cn2.threetree.entity.Room
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
@@ -26,7 +27,11 @@ class MainFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.recyclerMainRooms.adapter = RoomsListAdapter()
+        val onItemClickCallback : (room: Room) -> Unit = {
+            findNavController(this).navigate(MainFragmentDirections.actionMainFragmentToRoomFragment(it))
+        }
+
+        binding.recyclerMainRooms.adapter = RoomsListAdapter(onItemClickCallback)
         binding.recyclerMainRooms.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
         return binding.root
@@ -34,9 +39,5 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.buttonMainJoinRoom.setOnClickListener {
-            findNavController(this).navigate(MainFragmentDirections.actionMainFragmentToRoomFragment())
-        }
     }
 }
