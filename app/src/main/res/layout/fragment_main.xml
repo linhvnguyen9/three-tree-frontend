@@ -24,10 +24,12 @@
                 style="@style/SectionTitle" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_main_rooms"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_room"
-                tools:itemCount="3" />
+                tools:itemCount="3"
+                app:list="@{viewModel.rooms}"/>
 
             <TextView
                 android:text="Players"
