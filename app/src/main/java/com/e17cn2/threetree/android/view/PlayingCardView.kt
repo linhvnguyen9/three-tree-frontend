@@ -3,13 +3,11 @@ package com.e17cn2.threetree.android.view
 import android.content.Context
 import android.util.AttributeSet
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.e17cn2.threetree.android.R
-import com.e17cn2.threetree.android.domain.model.Suite
+import com.e17cn2.threetree.entity.Suite
 import com.e17cn2.threetree.android.utils.getEnum
-import com.google.android.material.card.MaterialCardView
 
 class PlayingCardView @JvmOverloads constructor(
     context: Context,

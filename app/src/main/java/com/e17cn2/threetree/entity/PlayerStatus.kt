@@ -1,4 +1,4 @@
-package com.e17cn2.threetree.android.domain.model
+package com.e17cn2.threetree.entity
 
 enum class PlayerStatus {
     ONLINE,

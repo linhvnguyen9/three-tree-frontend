@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.e17cn2.threetree.android.databinding.ItemRoomBinding
-import com.e17cn2.threetree.android.domain.model.Room
+import com.e17cn2.threetree.entity.Room
 
 class RoomsListAdapter : ListAdapter<Room, RoomsListAdapter.RoomViewHolder>(RoomListDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RoomViewHolder =
