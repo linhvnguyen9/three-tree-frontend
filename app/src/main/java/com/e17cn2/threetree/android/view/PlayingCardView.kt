@@ -47,13 +47,19 @@ class PlayingCardView @JvmOverloads constructor(
 
     fun setSuite(suiteCard: SuiteCard) {
         this.suiteCard = suiteCard
-        invalidate()
-        requestLayout()
+        val suiteRes = when (suiteCard) {
+            SuiteCard.SPADE -> R.drawable.ic_spade
+            SuiteCard.CLUBS -> R.drawable.ic_clubs
+            SuiteCard.HEARTS -> R.drawable.ic_hearts
+            SuiteCard.DIAMONDS -> R.drawable.ic_diamond
+        }
+        findViewById<ImageView>(R.id.image_suite).setImageResource(suiteRes)
+//        requestLayout()
     }
 
     fun setValue(value: Int) {
         this.value = value
-        invalidate()
-        requestLayout()
+        findViewById<TextView>(R.id.text_value).text = value.toString()
+//        requestLayout()
     }
 }

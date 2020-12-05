@@ -11,7 +11,9 @@ import androidx.navigation.fragment.NavHostFragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.e17cn2.threetree.android.R
 import com.e17cn2.threetree.android.databinding.FragmentMainBinding
+import com.e17cn2.threetree.android.view.PlayingCardView
 import com.e17cn2.threetree.entity.Room
+import com.e17cn2.threetree.entity.SuiteCard
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
@@ -39,5 +41,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.cardMainTest.setOnClickListener {
+            (it as PlayingCardView).setValue(8)
+            it.setSuite(SuiteCard.DIAMONDS)
+        }
     }
 }

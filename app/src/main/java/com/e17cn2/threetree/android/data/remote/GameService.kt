@@ -2,6 +2,8 @@ package com.e17cn2.threetree.android.data.remote
 
 import com.e17cn2.threetree.entity.Connection
 import com.e17cn2.threetree.android.data.local.ConnectionDao
+import com.e17cn2.threetree.entity.Player
+import com.e17cn2.threetree.entity.PlayerStatus
 import com.e17cn2.threetree.entity.Round
 import timber.log.Timber
 import java.io.ObjectInputStream
@@ -16,7 +18,7 @@ class GameService(private val connectionDao: ConnectionDao) {
     private val clientIp = connectionDao.getClientIpAddress()
 
     fun joinRoom(roomId: Int): Connection {
-        socket = Socket("10.170.77.8", roomId)
+        socket = Socket("192.168.1.133", roomId)
 
         oos = ObjectOutputStream(socket.getOutputStream())
         ois = ObjectInputStream(socket.getInputStream())
@@ -25,7 +27,7 @@ class GameService(private val connectionDao: ConnectionDao) {
             Connection(
                 clientIp,
                 roomId,
-                "5fc66d052fc9055ddc0d3485",
+                "5fcb9a0e6d0e7a0e9eff936c",
                 "JOIN"
             )
         )
@@ -40,7 +42,7 @@ class GameService(private val connectionDao: ConnectionDao) {
         val voteStart =  Connection(
             clientIp,
             roomId,
-            "22",
+            "5fcb9a0e6d0e7a0e9eff936c",
             "READY"
         )
         println(voteStart)
@@ -49,11 +51,23 @@ class GameService(private val connectionDao: ConnectionDao) {
     }
 
     fun getRoundResult(): Round {
+        val result = ois.readObject()
+        val round = result as? Round
+
+        while (round != null) {
+            val connection = result as List<Connection>
+            println(connection)
+        }
         println("Wait for card result")
         val roundResult = ois.readObject() as Round
         println(roundResult)
         Timber.d("round result $roundResult")
         return roundResult
+    }
+
+    fun getUsersInRoom() {
+        val result = ois.readObject() as List<Connection>
+        println(result)
     }
 
     fun closeConnection() {

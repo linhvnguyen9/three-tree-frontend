@@ -39,7 +39,7 @@ class PlayerRoundsAdapter() : ListAdapter<PlayerRound, PlayerRoundsAdapter.Playe
 }
 
 class PlayerRoundsDiffUtil : DiffUtil.ItemCallback<PlayerRound>() {
-    override fun areItemsTheSame(oldItem: PlayerRound, newItem: PlayerRound) = oldItem.hashCode() == newItem.hashCode()
+    override fun areItemsTheSame(oldItem: PlayerRound, newItem: PlayerRound) = oldItem.card1.toString() == newItem.card1.toString()
 
     override fun areContentsTheSame(oldItem: PlayerRound, newItem: PlayerRound) = oldItem == newItem
 }

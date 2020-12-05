@@ -11,6 +11,7 @@ import com.e17cn2.threetree.entity.PlayerRound
 import com.e17cn2.threetree.entity.Room
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import timber.log.Timber
 
 class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val quitGameUseCase: QuitGameUseCase, private val voteStartUseCase: VoteStartUseCase) : ViewModel() {
     private lateinit var room: Room
@@ -20,6 +21,9 @@ class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val 
 
     fun setRoom(room: Room) {
         this.room = room
+        viewModelScope.launch(Dispatchers.IO) {
+            startGameUseCase(room.serverPort)
+        }
     }
 
     fun quitGame() {
@@ -30,8 +34,9 @@ class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val 
 
     fun voteStart() {
         viewModelScope.launch(Dispatchers.IO) {
-            startGameUseCase(room.serverPort)
             val result = voteStartUseCase(room.serverPort)
+            Timber.d("Return card result in VM $result")
+            Timber.d("Return card result in VM ${result.playerRoundList}")
             _playerRounds.postValue(result.playerRoundList)
         }
     }

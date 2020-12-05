@@ -16,6 +16,7 @@ class ExampleUnitTest {
         val service = GameService(connectionDao)
         service.joinRoom(8090)
         service.voteStart(8090)
+//        service.getUsersInRoom()
         service.getRoundResult()
     }
 }

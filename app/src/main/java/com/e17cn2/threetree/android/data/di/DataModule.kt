@@ -18,10 +18,10 @@ val dataModule = module {
     factory {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://10.170.77.8:8080")
+            .baseUrl("http://192.168.1.133:8088")
             .build()
     }
 
     factory { get<Retrofit>().create(RoomsService::class.java) }
-    factory { GameService(get()) }
+    single { GameService(get()) }
 }

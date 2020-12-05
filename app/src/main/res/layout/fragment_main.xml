@@ -49,6 +49,7 @@
                 tools:text="Hello World!" />
 
             <com.e17cn2.threetree.android.view.PlayingCardView
+                android:id="@+id/card_main_test"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:suite="clubs"
