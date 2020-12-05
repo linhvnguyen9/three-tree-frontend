@@ -26,7 +26,7 @@ class GameService(private val connectionDao: ConnectionDao) {
             Connection(
                 clientIp,
                 roomId,
-                "22",
+                "23",
                 "JOIN"
             )
         )

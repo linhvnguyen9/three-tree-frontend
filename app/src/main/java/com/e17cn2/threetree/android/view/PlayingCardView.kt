@@ -6,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import com.e17cn2.threetree.android.R
-import com.e17cn2.threetree.entity.Suite
+import com.e17cn2.threetree.entity.SuiteCard
 import com.e17cn2.threetree.android.utils.getEnum
 
 class PlayingCardView @JvmOverloads constructor(
@@ -14,7 +14,7 @@ class PlayingCardView @JvmOverloads constructor(
     attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : CardView(context, attrs, defStyleAttr) {
-    private var suite: Suite
+    private var suiteCard: SuiteCard
     private var value: Int?
 
     init {
@@ -22,14 +22,14 @@ class PlayingCardView @JvmOverloads constructor(
 
         context.theme.obtainStyledAttributes(attrs, R.styleable.PlayingCardView, 0, 0).apply {
             try {
-                suite = getEnum(R.styleable.PlayingCardView_suite, Suite.SPADES)
+                suiteCard = getEnum(R.styleable.PlayingCardView_suite, SuiteCard.SPADE)
                 value = getInt(R.styleable.PlayingCardView_value, 1)
 
-                val suiteRes = when (suite) {
-                    Suite.SPADES -> R.drawable.ic_spade
-                    Suite.CLUBS -> R.drawable.ic_clubs
-                    Suite.HEARTS -> R.drawable.ic_hearts
-                    Suite.DIAMONDS -> R.drawable.ic_diamond
+                val suiteRes = when (suiteCard) {
+                    SuiteCard.SPADE -> R.drawable.ic_spade
+                    SuiteCard.CLUBS -> R.drawable.ic_clubs
+                    SuiteCard.HEARTS -> R.drawable.ic_hearts
+                    SuiteCard.DIAMONDS -> R.drawable.ic_diamond
                 }
 
                 findViewById<ImageView>(R.id.image_suite).setImageResource(suiteRes)
@@ -45,8 +45,8 @@ class PlayingCardView @JvmOverloads constructor(
         }
     }
 
-    fun setSuite(suite: Suite) {
-        this.suite = suite
+    fun setSuite(suiteCard: SuiteCard) {
+        this.suiteCard = suiteCard
         invalidate()
         requestLayout()
     }

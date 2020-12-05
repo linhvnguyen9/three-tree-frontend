@@ -1,8 +1,8 @@
 package com.e17cn2.threetree.entity
 
-enum class Suite(val value: Int) {
+enum class SuiteCard(val numVal: Int) {
     DIAMONDS(4), //Zo
     HEARTS(3), //Co
     CLUBS(2), //Tep
-    SPADES(1) //Bich
+    SPADE(1) //Bich
 }
