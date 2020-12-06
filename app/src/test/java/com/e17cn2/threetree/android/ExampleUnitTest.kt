@@ -17,13 +17,12 @@ class ExampleUnitTest {
         val connectionDao = ConnectionDao()
         val service = GameService(connectionDao)
         service.joinRoom(8090)
-        Thread.sleep(5000)
+//        Thread.sleep(5000)
         GlobalScope.launch {
             service.getUsersInRoom()
         }
         service.voteStart(8090)
-        Thread.sleep(5000)
-//        service.getUsersInRoom()
+//        Thread.sleep(5000)
         service.getRoundResult()
     }
 }

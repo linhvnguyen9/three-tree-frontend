@@ -36,6 +36,8 @@ class PlayerRoundsAdapter() : ListAdapter<PlayerRound, PlayerRoundsAdapter.Playe
             }
         }
     }
+
+
 }
 
 class PlayerRoundsDiffUtil : DiffUtil.ItemCallback<PlayerRound>() {

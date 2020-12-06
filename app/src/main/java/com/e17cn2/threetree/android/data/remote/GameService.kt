@@ -25,9 +25,9 @@ class GameService(private val connectionDao: ConnectionDao) {
     private val clientIp = connectionDao.getClientIpAddress()
 
     fun joinRoom(roomId: Int): List<Connection> {
-        socket = Socket("192.168.1.117", roomId)
+        socket = Socket("192.168.1.86", roomId)
         println("Connected to main socket")
-        eventSocket = Socket("192.168.1.117", roomId + 1)
+        eventSocket = Socket("192.168.1.86", roomId + 1)
         println("Connected to event socket")
 
         oos = ObjectOutputStream(socket.getOutputStream())
@@ -43,7 +43,7 @@ class GameService(private val connectionDao: ConnectionDao) {
             Connection(
                 clientIp,
                 roomId,
-                "5fc9a417dc13dd0fc1cc3be4",
+                "5fcb97af492b25786dd53786",
                 "JOIN"
             )
         )
@@ -63,7 +63,7 @@ class GameService(private val connectionDao: ConnectionDao) {
         val voteStart =  Connection(
             clientIp,
             roomId,
-            "5fc9a417dc13dd0fc1cc3be4",
+            "5fcb97af492b25786dd53786",
             "READY"
         )
         println(voteStart)
@@ -87,13 +87,16 @@ class GameService(private val connectionDao: ConnectionDao) {
     }
 
     suspend fun getUsersInRoom() : LiveData<List<Connection>> {
+        Timber.d("Get users in room")
         val liveData = MutableLiveData<List<Connection>>()
         withContext(Dispatchers.IO) {
             while (true) {
                 println("Listening for new connections")
+                Timber.d("Listening for new connections")
                 val connections = ois.readObject() as List<Connection>
                 println("Number of players in room changes $connections")
-//                liveData.postValue(connections)
+                Timber.d("Number of players in room changes $connections")
+                liveData.postValue(connections)
             }
         }
         return liveData
