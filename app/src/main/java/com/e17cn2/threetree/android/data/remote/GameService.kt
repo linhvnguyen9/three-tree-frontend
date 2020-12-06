@@ -93,7 +93,7 @@ class GameService(private val connectionDao: ConnectionDao) {
                 println("Listening for new connections")
                 val connections = ois.readObject() as List<Connection>
                 println("Number of players in room changes $connections")
-                liveData.postValue(connections)
+//                liveData.postValue(connections)
             }
         }
         return liveData
