@@ -1,10 +1,14 @@
 package com.e17cn2.threetree.android.data.remote
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import com.e17cn2.threetree.entity.Connection
 import com.e17cn2.threetree.android.data.local.ConnectionDao
 import com.e17cn2.threetree.entity.Player
 import com.e17cn2.threetree.entity.PlayerStatus
 import com.e17cn2.threetree.entity.Round
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.io.ObjectInputStream
 import java.io.ObjectOutputStream
@@ -14,14 +18,16 @@ class GameService(private val connectionDao: ConnectionDao) {
     private lateinit var socket: Socket
     private lateinit var ois: ObjectInputStream
     private lateinit var oos: ObjectOutputStream
+    private lateinit var eventInputStream : ObjectInputStream
 
     private val clientIp = connectionDao.getClientIpAddress()
 
-    fun joinRoom(roomId: Int): Connection {
-        socket = Socket("192.168.1.133", roomId)
+    fun joinRoom(roomId: Int): List<Connection> {
+        socket = Socket("192.168.1.117", roomId)
 
         oos = ObjectOutputStream(socket.getOutputStream())
         ois = ObjectInputStream(socket.getInputStream())
+        eventInputStream = ObjectInputStream(socket.getInputStream())
 
         oos.writeObject(
             Connection(
@@ -31,7 +37,7 @@ class GameService(private val connectionDao: ConnectionDao) {
                 "JOIN"
             )
         )
-        val response = ois.readObject() as Connection
+        val response = ois.readObject() as List<Connection>
         Timber.d(response.toString())
         println("Response $response")
         return response
@@ -39,6 +45,8 @@ class GameService(private val connectionDao: ConnectionDao) {
 
     fun voteStart(roomId: Int) {
         println("Voting to start")
+        val connections = ois.readObject() as List<Connection>
+        println("Before vote start sent connections $connections")
         val voteStart =  Connection(
             clientIp,
             roomId,
@@ -54,20 +62,26 @@ class GameService(private val connectionDao: ConnectionDao) {
         val result = ois.readObject()
         val round = result as? Round
 
-        while (round != null) {
+        while (round == null) {
             val connection = result as List<Connection>
             println(connection)
         }
         println("Wait for card result")
-        val roundResult = ois.readObject() as Round
-        println(roundResult)
-        Timber.d("round result $roundResult")
-        return roundResult
+        println(round)
+        Timber.d("round result $round")
+        return round
     }
 
-    fun getUsersInRoom() {
-        val result = ois.readObject() as List<Connection>
-        println(result)
+    suspend fun getUsersInRoom() : LiveData<List<Connection>> {
+        val liveData = MutableLiveData<List<Connection>>()
+        withContext(Dispatchers.IO) {
+            while (true) {
+                val connections = eventInputStream.readObject() as List<Connection>
+                println(connections)
+                liveData.postValue(connections)
+            }
+        }
+        return liveData
     }
 
     fun closeConnection() {

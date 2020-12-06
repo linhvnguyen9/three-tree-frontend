@@ -8,11 +8,12 @@ import org.koin.dsl.module
 
 val presentationModule = module {
     viewModel { MainViewModel(get(), get()) }
-    viewModel { RoomViewModel(get(), get(), get()) }
+    viewModel { RoomViewModel(get(), get(), get(), get()) }
 
     factory { GetClientIpAddressUseCase(get()) }
     factory { GetRoomsListUseCase(get()) }
     factory { StartGameUseCase(get()) }
     factory { QuitGameUseCase(get()) }
     factory { VoteStartUseCase(get()) }
+    factory { GetUsersInRoomUseCase(get()) }
 }

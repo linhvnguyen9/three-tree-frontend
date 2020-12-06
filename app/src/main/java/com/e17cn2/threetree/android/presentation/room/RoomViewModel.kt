@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.e17cn2.threetree.android.domain.usecase.GetUsersInRoomUseCase
 import com.e17cn2.threetree.android.domain.usecase.QuitGameUseCase
 import com.e17cn2.threetree.android.domain.usecase.StartGameUseCase
 import com.e17cn2.threetree.android.domain.usecase.VoteStartUseCase
@@ -13,7 +14,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val quitGameUseCase: QuitGameUseCase, private val voteStartUseCase: VoteStartUseCase) : ViewModel() {
+class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val quitGameUseCase: QuitGameUseCase, private val voteStartUseCase: VoteStartUseCase, private val getUsersInRoomUseCase: GetUsersInRoomUseCase) : ViewModel() {
     private lateinit var room: Room
 
     private val _playerRounds = MutableLiveData<List<PlayerRound>>()
