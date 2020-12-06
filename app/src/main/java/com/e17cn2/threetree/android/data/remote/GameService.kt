@@ -16,28 +16,41 @@ import java.net.Socket
 
 class GameService(private val connectionDao: ConnectionDao) {
     private lateinit var socket: Socket
+    private lateinit var eventSocket : Socket
     private lateinit var ois: ObjectInputStream
     private lateinit var oos: ObjectOutputStream
     private lateinit var eventInputStream : ObjectInputStream
+    private lateinit var eventOutputStream : ObjectOutputStream
 
     private val clientIp = connectionDao.getClientIpAddress()
 
     fun joinRoom(roomId: Int): List<Connection> {
         socket = Socket("192.168.1.117", roomId)
+        println("Connected to main socket")
+        eventSocket = Socket("192.168.1.117", roomId + 1)
+        println("Connected to event socket")
 
         oos = ObjectOutputStream(socket.getOutputStream())
+        println("OOS main socket")
         ois = ObjectInputStream(socket.getInputStream())
-        eventInputStream = ObjectInputStream(socket.getInputStream())
+        println("OIS main socket")
+        eventOutputStream = ObjectOutputStream(eventSocket.getOutputStream())
+        println("OOS event socket")
+        eventInputStream = ObjectInputStream(eventSocket.getInputStream())
+        println("OIS event socket")
 
         oos.writeObject(
             Connection(
                 clientIp,
                 roomId,
-                "5fcb9a0e6d0e7a0e9eff936c",
+                "5fc9a417dc13dd0fc1cc3be4",
                 "JOIN"
             )
         )
-        val response = ois.readObject() as List<Connection>
+        println("Write join msg success")
+        ///////////////////////////////////
+//        val response = ois.readObject() as List<Connection>
+        val response = emptyList<Connection>()
         Timber.d(response.toString())
         println("Response $response")
         return response
@@ -45,21 +58,22 @@ class GameService(private val connectionDao: ConnectionDao) {
 
     fun voteStart(roomId: Int) {
         println("Voting to start")
-        val connections = ois.readObject() as List<Connection>
-        println("Before vote start sent connections $connections")
+//        val connections = eventInputStream.readObject() as List<Connection>
+//        println("Before vote start sent connections $connections")
         val voteStart =  Connection(
             clientIp,
             roomId,
-            "5fcb9a0e6d0e7a0e9eff936c",
+            "5fc9a417dc13dd0fc1cc3be4",
             "READY"
         )
         println(voteStart)
-        oos.writeObject(voteStart)
+        eventOutputStream.writeObject(voteStart)
         println("Vote start done")
     }
 
     fun getRoundResult(): Round {
-        val result = ois.readObject()
+        println("Starting to get round result")
+        val result = eventInputStream.readObject()
         val round = result as? Round
 
         while (round == null) {
@@ -76,8 +90,9 @@ class GameService(private val connectionDao: ConnectionDao) {
         val liveData = MutableLiveData<List<Connection>>()
         withContext(Dispatchers.IO) {
             while (true) {
-                val connections = eventInputStream.readObject() as List<Connection>
-                println(connections)
+                println("Listening for new connections")
+                val connections = ois.readObject() as List<Connection>
+                println("Number of players in room changes $connections")
                 liveData.postValue(connections)
             }
         }

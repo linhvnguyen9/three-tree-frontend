@@ -20,7 +20,7 @@ class ExampleUnitTest {
         GlobalScope.launch {
             service.getUsersInRoom()
         }
-        service.voteStart(8090)
+            service.voteStart(8090)
 //        service.getUsersInRoom()
         service.getRoundResult()
     }
