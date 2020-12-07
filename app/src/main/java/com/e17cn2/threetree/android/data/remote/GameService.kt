@@ -26,9 +26,9 @@ class GameService(private val connectionDao: ConnectionDao) {
     private val clientIp = connectionDao.getClientIpAddress()
 
     fun joinRoom(roomId: Int): List<Connection> {
-        socket = Socket("192.168.1.86", roomId)
+        socket = Socket("192.168.1.133", roomId)
         println("Connected to main socket")
-        eventSocket = Socket("192.168.1.86", roomId + 1)
+        eventSocket = Socket("192.168.1.133", roomId + 1)
         println("Connected to event socket")
 
         val playerId = Hawk.get<String>("USER_ID")
@@ -92,13 +92,16 @@ class GameService(private val connectionDao: ConnectionDao) {
     }
 
     suspend fun getUsersInRoom() : LiveData<List<Connection>> {
+        Timber.d("Get users in room")
         val liveData = MutableLiveData<List<Connection>>()
         withContext(Dispatchers.IO) {
             while (true) {
                 println("Listening for new connections")
+                Timber.d("Listening for new connections")
                 val connections = ois.readObject() as List<Connection>
                 println("Number of players in room changes $connections")
-//                liveData.postValue(connections)
+                Timber.d("Number of players in room changes $connections")
+                liveData.postValue(connections)
             }
         }
         return liveData

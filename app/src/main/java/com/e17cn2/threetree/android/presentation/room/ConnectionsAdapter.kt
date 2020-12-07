@@ -12,7 +12,7 @@ import com.e17cn2.threetree.entity.Connection
 import com.e17cn2.threetree.entity.PlayerRound
 import com.e17cn2.threetree.entity.Room
 
-class ConnectionsAdapter() : ListAdapter<Connection, ConnectionsAdapter.ConnectionViewHolder>(ConnectionDiffUtil()) {
+class ConnectionsAdapter : ListAdapter<Connection, ConnectionsAdapter.ConnectionViewHolder>(ConnectionDiffUtil()) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ConnectionViewHolder =
         ConnectionViewHolder.from(parent)
 

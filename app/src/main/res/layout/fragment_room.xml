@@ -40,6 +40,18 @@
             app:layout_constraintTop_toBottomOf="@id/text_room_players_title"
             app:list="@{viewModel.usersInRoom}"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/cardview_dark_background"
+            android:text="@{viewModel.winnerText}"
+            android:textColor="@color/white"
+            android:textSize="14sp"
+            app:layout_constraintBottom_toBottomOf="@+id/recycler_room_other_players"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Winner : "/>
+
         <LinearLayout
             android:id="@+id/linear_room_buttons"
             android:layout_width="0dp"

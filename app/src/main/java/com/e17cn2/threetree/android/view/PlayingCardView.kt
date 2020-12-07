@@ -59,7 +59,11 @@ class PlayingCardView @JvmOverloads constructor(
 
     fun setValue(value: Int) {
         this.value = value
-        findViewById<TextView>(R.id.text_value).text = value.toString()
+        val valueString = when (value) {
+            1 -> "A"
+            else -> value.toString()
+        }
+        findViewById<TextView>(R.id.text_value).text = valueString
 //        requestLayout()
     }
 }
