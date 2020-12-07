@@ -25,9 +25,9 @@ class GameService(private val connectionDao: ConnectionDao) {
     private val clientIp = connectionDao.getClientIpAddress()
 
     fun joinRoom(roomId: Int): List<Connection> {
-        socket = Socket("192.168.1.86", roomId)
+        socket = Socket("192.168.1.133", roomId)
         println("Connected to main socket")
-        eventSocket = Socket("192.168.1.86", roomId + 1)
+        eventSocket = Socket("192.168.1.133", roomId + 1)
         println("Connected to event socket")
 
         oos = ObjectOutputStream(socket.getOutputStream())

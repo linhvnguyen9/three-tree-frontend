@@ -26,6 +26,17 @@ class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val 
     private val _toastMessage = MutableLiveData<String>()
     val toastMessage : LiveData<String> get() = _toastMessage
 
+    private val _winnerText = MutableLiveData<String>()
+    val winnerText : LiveData<String> get() = _winnerText
+    
+    val observer = Observer<List<Connection>> {
+        Timber.d(it.toString())
+    }
+
+    init {
+        usersInRoom.observeForever(observer)
+    }
+
     fun setRoom(room: Room) {
         this.room = room
         viewModelScope.launch(Dispatchers.Main) {
@@ -59,6 +70,7 @@ class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val 
             Timber.d("Return card result in VM ${result.playerRoundList}")
             _playerRounds.postValue(result.playerRoundList)
             _toastMessage.postValue("Round completed")
+            _winnerText.postValue("Winner = ${result.playerRoundList.find { it.player.id == result.winner.id }?.player?.username}")
         }
     }
 }
