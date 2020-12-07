@@ -1,6 +1,7 @@
 package com.e17cn2.threetree.android.data.di
 
 import com.e17cn2.threetree.android.data.local.ConnectionDao
+import com.e17cn2.threetree.android.data.remote.AccountService
 import com.e17cn2.threetree.android.data.remote.GameService
 import com.e17cn2.threetree.android.data.remote.RoomsService
 import com.e17cn2.threetree.android.data.repository.ConnectionRepositoryImpl
@@ -18,10 +19,11 @@ val dataModule = module {
     factory {
         Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://192.168.1.117:8080")
+            .baseUrl("http://192.168.1.86:8088")
             .build()
     }
 
     factory { get<Retrofit>().create(RoomsService::class.java) }
+    factory { get<Retrofit>().create(AccountService::class.java) }
     single { GameService(get()) }
 }

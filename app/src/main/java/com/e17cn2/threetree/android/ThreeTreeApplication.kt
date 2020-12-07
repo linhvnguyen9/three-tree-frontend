@@ -4,6 +4,7 @@ import android.app.Application
 import android.util.Log
 import com.e17cn2.threetree.android.data.di.dataModule
 import com.e17cn2.threetree.android.presentation.di.presentationModule
+import com.orhanobut.hawk.Hawk
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -16,6 +17,7 @@ class ThreeTreeApplication : Application() {
 
         initTimber()
         initKoin()
+        initHawk()
     }
 
     private fun initKoin() {
@@ -35,5 +37,9 @@ class ThreeTreeApplication : Application() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         }
+    }
+
+    private fun initHawk() {
+        Hawk.init(this).build()
     }
 }

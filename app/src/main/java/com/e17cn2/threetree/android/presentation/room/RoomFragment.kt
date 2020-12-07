@@ -41,6 +41,10 @@ class RoomFragment : Fragment() {
         binding.recyclerRoomOtherPlayers.layoutManager =
             LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
 
+        binding.recyclerRoomConnections.adapter = ConnectionsAdapter()
+        binding.recyclerRoomConnections.layoutManager =
+            LinearLayoutManager(requireContext(), LinearLayoutManager.VERTICAL, false)
+
         binding.buttonRoomReady.setOnClickListener {
             viewModel.voteStart()
         }

@@ -1,5 +1,6 @@
 package com.e17cn2.threetree.entity
 
+import com.google.gson.annotations.SerializedName
 import java.io.Serializable
 
 data class Player(
@@ -7,7 +8,7 @@ data class Player(
     val username: String,
     val password: String,
     val money: Double,
-    val status: PlayerStatus
+    @SerializedName("playerStatus") val status: PlayerStatus
 ) : Serializable {
     companion object {
         val serialVersionUID = 1L

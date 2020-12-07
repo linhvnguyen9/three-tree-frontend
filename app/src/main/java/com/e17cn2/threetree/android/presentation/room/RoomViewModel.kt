@@ -1,13 +1,11 @@
 package com.e17cn2.threetree.android.presentation.room
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.e17cn2.threetree.android.domain.usecase.GetUsersInRoomUseCase
 import com.e17cn2.threetree.android.domain.usecase.QuitGameUseCase
 import com.e17cn2.threetree.android.domain.usecase.StartGameUseCase
 import com.e17cn2.threetree.android.domain.usecase.VoteStartUseCase
+import com.e17cn2.threetree.entity.Connection
 import com.e17cn2.threetree.entity.PlayerRound
 import com.e17cn2.threetree.entity.Room
 import kotlinx.coroutines.Dispatchers
@@ -20,10 +18,14 @@ class RoomViewModel(private val startGameUseCase: StartGameUseCase, private val 
     private val _playerRounds = MutableLiveData<List<PlayerRound>>()
     val playerRounds : LiveData<List<PlayerRound>> get() = _playerRounds
 
+    private var _usersInRoom : LiveData<List<Connection>>? = null
+    val usersInRoom : LiveData<List<Connection>> get() = _usersInRoom ?: MutableLiveData<List<Connection>>()
+
     fun setRoom(room: Room) {
         this.room = room
         viewModelScope.launch(Dispatchers.IO) {
             startGameUseCase(room.serverPort)
+            _usersInRoom = getUsersInRoomUseCase()
         }
     }
 
