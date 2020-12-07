@@ -6,6 +6,8 @@ import com.e17cn2.threetree.android.data.remote.GameService
 import com.e17cn2.threetree.android.data.remote.RoomsService
 import com.e17cn2.threetree.android.data.repository.ConnectionRepositoryImpl
 import com.e17cn2.threetree.android.domain.repository.ConnectionRepository
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidApplication
 import org.koin.android.ext.koin.androidContext
 import org.koin.dsl.module
@@ -17,9 +19,20 @@ val dataModule = module {
     factory<ConnectionRepository> { ConnectionRepositoryImpl(get()) as ConnectionRepository }
 
     factory {
+        HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY }
+    }
+
+    factory {
+        OkHttpClient.Builder()
+            .addInterceptor(get<HttpLoggingInterceptor>())
+            .build()
+    }
+
+    factory {
         Retrofit.Builder()
+            .client(get())
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl("http://192.168.1.117:8080")
+            .baseUrl("http://192.168.1.133:8088")
             .build()
     }
 

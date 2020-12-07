@@ -31,7 +31,7 @@ class GameService(private val connectionDao: ConnectionDao) {
         eventSocket = Socket("192.168.1.133", roomId + 1)
         println("Connected to event socket")
 
-        val playerId = Hawk.get<String>("USER_ID")
+        val playerId = connectionDao.getUserId()
 
         oos = ObjectOutputStream(socket.getOutputStream())
         println("OOS main socket")
@@ -60,7 +60,7 @@ class GameService(private val connectionDao: ConnectionDao) {
     }
 
     fun voteStart(roomId: Int) {
-        val playerId = Hawk.get<String>("USER_ID")
+        val playerId = connectionDao.getUserId()
 
         println("Voting to start")
 //        val connections = eventInputStream.readObject() as List<Connection>

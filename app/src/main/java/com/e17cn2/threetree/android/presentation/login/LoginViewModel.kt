@@ -15,7 +15,7 @@ class LoginViewModel(private val loginUseCase: LoginUseCase): ViewModel() {
 
     fun login(loginRequest: LoginRequest) {
         viewModelScope.launch(Dispatchers.IO) {
-            response.value = loginUseCase(loginRequest)
+            response.postValue(loginUseCase(loginRequest))
         }
     }
 }

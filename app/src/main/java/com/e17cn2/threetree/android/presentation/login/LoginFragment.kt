@@ -37,8 +37,8 @@ class LoginFragment : Fragment() {
         binding.buttonLogin.setOnClickListener {
             viewModel.login(
                 LoginRequest(
-                    binding.editLoginPassword.text.toString(),
-                    binding.editLoginUname.text.toString()
+                    binding.editLoginUname.text.toString(),
+                    binding.editLoginPassword.text.toString()
                 )
             )
         }
