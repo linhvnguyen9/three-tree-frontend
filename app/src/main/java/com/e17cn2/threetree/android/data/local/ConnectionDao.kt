@@ -24,7 +24,7 @@ class ConnectionDao() {
         return try {
             Hawk.get<String>("USER_ID")
         } catch (e: IllegalStateException) {
-            return "5fcbaee40c6dc359fbbedcba"
+            return "5fc9a428dc13dd0fc1cc3be5"
         }
     }
 }
